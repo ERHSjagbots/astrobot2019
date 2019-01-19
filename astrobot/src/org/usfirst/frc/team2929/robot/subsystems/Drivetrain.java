@@ -33,8 +33,6 @@ public class Drivetrain extends Subsystem {
 	public static SpeedControllerGroup RDrivetrain;
 	public static DifferentialDrive drivetrain;
 	
-	public static WPI_TalonSRX randomMotor;
-	
 	public Drivetrain(){
 		
 		//initialization using constructor
@@ -46,8 +44,6 @@ public class Drivetrain extends Subsystem {
 		LDrivetrain = new SpeedControllerGroup(L1TalonSRX, L2TalonSRX);
 		RDrivetrain = new SpeedControllerGroup(R1TalonSRX, R2TalonSRX);
 		drivetrain = new DifferentialDrive(LDrivetrain, RDrivetrain);
-		
-		randomMotor = new WPI_TalonSRX(RobotMap.randomMotor);
 		
 	}
 	
