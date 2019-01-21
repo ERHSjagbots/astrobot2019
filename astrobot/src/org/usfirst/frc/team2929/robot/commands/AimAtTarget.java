@@ -8,33 +8,76 @@
 package org.usfirst.frc.team2929.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import org.usfirst.frc.team2929.robot.Robot;
 import org.usfirst.frc.team2929.robot.subsystems.Drivetrain;
+import org.usfirst.frc.team2929.robot.utility.ObjectSelect;
 
 /**
  * An example command.  You can replace me with your own command.
  */
-public class TankDrive extends Command {
-	public TankDrive() {
+public class AimAtTarget extends Command {
+	
+	private int selection;
+	
+	private double center;
+	
+	public AimAtTarget(ObjectSelect selector) {
 		// Use requires() here to declare subsystem dependencies
 		requires(Robot.drivetrain);
+		selection = selector.getValue();
+		
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
+		
+		
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		Robot.drivetrain.getDriveTrain().tankDrive(Robot.m_oi.getRJoystick().getY(),Robot.m_oi.getLJoystick().getY());
+		center = 0;
+		if (selection == 0 && Robot.centerX > 0) {
+			center = Robot.centerX;
+		} else if (selection == 1) {
+			if (Robot.centerX > 0 && Robot.centerX2 > 0) {
+				center = (Robot.centerX + Robot.centerX2) / 2; 
+			} else if (Robot.centerX > 0) {
+				center = Robot.centerX;
+			} else if (Robot.centerX2 > 0) {
+				center = Robot.centerX2;
+			}
+		} else if (selection == 2 && Robot.centerX2 > 0){
+			center = Robot.centerX2;
+		}
+		
+		SmartDashboard.putNumber("center command", center);
+		
+		if (center > 370) {
+			Robot.drivetrain.getDriveTrain().tankDrive(0.35, -0.35);
+		} else if (center == 0) {
+			Robot.drivetrain.getDriveTrain().tankDrive(0, 0);
+		} else if (center < 270) {
+			Robot.drivetrain.getDriveTrain().tankDrive(-0.35, 0.35);
+		} else {
+			Robot.drivetrain.getDriveTrain().tankDrive(0, 0);
+		}
+		
+		
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return false;
+		if ( 240 < center && center < 400) {
+			return false;
+		} else {
+			return false;
+		}
 	}
 
 	// Called once after isFinished returns true

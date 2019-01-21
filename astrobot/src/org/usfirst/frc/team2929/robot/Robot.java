@@ -26,10 +26,12 @@ import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.Rect;
 import org.opencv.imgproc.Imgproc;
+import org.usfirst.frc.team2929.robot.commands.AimAtTarget;
 import org.usfirst.frc.team2929.robot.commands.ExampleCommand;
 import org.usfirst.frc.team2929.robot.subsystems.Arm;
 import org.usfirst.frc.team2929.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team2929.robot.subsystems.ExampleSubsystem;
+import org.usfirst.frc.team2929.robot.utility.ObjectSelect;
 import org.usfirst.frc.team2929.robot.vision.Camera;
 import org.usfirst.frc.team2929.robot.vision.GripPipeline;
 
@@ -75,10 +77,12 @@ public class Robot extends TimedRobot {
 	public void robotInit() {
 		m_oi = new OI();
 		m_chooser.addDefault("Default Auto", new ExampleCommand());
+		m_chooser.addObject("AimAtTarget", new AimAtTarget(ObjectSelect.CENTER));
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", m_chooser);
 		
-		camera = new Camera(CameraServer.getInstance().startAutomaticCapture());
+		
+		camera = new Camera(CameraServer.getInstance().startAutomaticCapture(0));
 		camera.getCamera().setVideoMode(PixelFormat.kMJPEG, 640, 480, 30);
 		camera.getCamera().setBrightness(18);
 		camera.getCamera().setExposureManual(18);
@@ -92,9 +96,9 @@ public class Robot extends TimedRobot {
 			//double centerX;
 			@Override
 			public void copyPipelineOutputs(GripPipeline pipeline) {
-	            
+	            SmartDashboard.putNumber("output size", pipeline.filterContoursOutput().size());
 				if (pipeline.filterContoursOutput().size() > 0) {
-		            Rect r1 = Imgproc.boundingRect(pipeline.filterContoursOutput().get(pipeline.filterContoursOutput().size()-1));
+		            Rect r1 = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
 		            synchronized (imgLock) {
 		                centerX = r1.x + (r1.width / 2);
 		                distToObj1 = 0;
@@ -113,7 +117,7 @@ public class Robot extends TimedRobot {
 		            }
 		        }
 				if (pipeline.filterContoursOutput().size() > 1) {
-		            Rect r2 = Imgproc.boundingRect(pipeline.filterContoursOutput().get(pipeline.filterContoursOutput().size()-1));
+		            Rect r2 = Imgproc.boundingRect(pipeline.filterContoursOutput().get(1));
 		            synchronized (imgLock) {
 		                centerX2 = r2.x + (r2.width / 2);
 		                distToObj2 = 0;
@@ -140,6 +144,8 @@ public class Robot extends TimedRobot {
 //                }
                 
 				List<MatOfPoint> hulls = pipeline.convexHullsOutput();
+				SmartDashboard.putNumber("centerX", centerX);
+				SmartDashboard.putNumber("centerX2", centerX2);
 				SmartDashboard.putNumber("center", (centerX2+centerX)/2);
 				
 //                contourImage = new Mat(320, 240, CvType.CV_32SC1);
@@ -148,6 +154,7 @@ public class Robot extends TimedRobot {
 			
 		});
 
+		visionThread.start();
 		
 		contourSource.putFrame(contourImage);
 		
@@ -183,6 +190,8 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		m_autonomousCommand = m_chooser.getSelected();
+		
+		m_autonomousCommand = new AimAtTarget(ObjectSelect.CENTER);
 
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -221,6 +230,12 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
+		
+		SmartDashboard.putNumber("LJoystick Y", m_oi.getLJoystick().getY());
+		SmartDashboard.putNumber("RJoystick Y", m_oi.getRJoystick().getY());
+		SmartDashboard.putNumber("center1", centerX);
+		SmartDashboard.putNumber("center2", centerX2);
+		
 		Scheduler.getInstance().run();
 	}
 

@@ -7,7 +7,12 @@
 
 package org.usfirst.frc.team2929.robot;
 
+import org.usfirst.frc.team2929.robot.commands.AimAtTarget;
+import org.usfirst.frc.team2929.robot.utility.ObjectSelect;
+
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -42,8 +47,26 @@ public class OI {
 	// until it is finished as determined by it's isFinished method.
 	// button.whenReleased(new ExampleCommand());
 	
-	public Joystick LJoystick = new Joystick(0);
-	public Joystick RJoystick = new Joystick(1);
+	public Joystick LJoystick;
+	public Joystick RJoystick;
 	
+	public JoystickButton aimAtThing;
+	
+	public OI() {
+		
+		LJoystick = new Joystick(0);
+		RJoystick = new Joystick(1);
+	
+		aimAtThing = new JoystickButton(LJoystick, 1);
+		aimAtThing.whenPressed(new AimAtTarget(ObjectSelect.CENTER));
+	}
+	
+	public Joystick getLJoystick() {
+		return LJoystick;
+	}
+	
+	public Joystick getRJoystick() {
+		return RJoystick;
+	}
 	
 }

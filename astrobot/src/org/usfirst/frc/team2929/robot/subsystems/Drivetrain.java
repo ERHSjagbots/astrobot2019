@@ -11,6 +11,7 @@ import org.usfirst.frc.team2929.robot.RobotMap;
 import org.usfirst.frc.team2929.robot.commands.TankDrive;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -22,11 +23,11 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 public class Drivetrain extends Subsystem {
 
 	
-	//setup of the talons for the drivetrain
-	public static WPI_TalonSRX L1TalonSRX;
-	public static WPI_TalonSRX L2TalonSRX;
-	public static WPI_TalonSRX R1TalonSRX;
-	public static WPI_TalonSRX R2TalonSRX;
+	//setup of the victors of the drivetrain
+	public static WPI_VictorSPX L1TalonSRX;
+	public static WPI_VictorSPX L2TalonSRX;
+	public static WPI_VictorSPX R1TalonSRX;
+	public static WPI_VictorSPX R2TalonSRX;
 	
 	//getting differential drive
 	public static SpeedControllerGroup LDrivetrain;
@@ -36,10 +37,10 @@ public class Drivetrain extends Subsystem {
 	public Drivetrain(){
 		
 		//initialization using constructor
-		L1TalonSRX = new WPI_TalonSRX(RobotMap.dL1TalonSRX);
-		L2TalonSRX = new WPI_TalonSRX(RobotMap.dL2TalonSRX);
-		R1TalonSRX = new WPI_TalonSRX(RobotMap.dR1TalonSRX);
-		R2TalonSRX = new WPI_TalonSRX(RobotMap.dR2TalonSRX);
+		L1TalonSRX = new WPI_VictorSPX(RobotMap.dL1TalonSRX);
+		L2TalonSRX = new WPI_VictorSPX(RobotMap.dL2TalonSRX);
+		R1TalonSRX = new WPI_VictorSPX(RobotMap.dR1TalonSRX);
+		R2TalonSRX = new WPI_VictorSPX(RobotMap.dR2TalonSRX);
 		
 		LDrivetrain = new SpeedControllerGroup(L1TalonSRX, L2TalonSRX);
 		RDrivetrain = new SpeedControllerGroup(R1TalonSRX, R2TalonSRX);
@@ -51,5 +52,9 @@ public class Drivetrain extends Subsystem {
 		
 		//setting default command to tankdrive
 		setDefaultCommand(new TankDrive());
+	}
+	
+	public DifferentialDrive getDriveTrain() {
+		return drivetrain;
 	}
 }
