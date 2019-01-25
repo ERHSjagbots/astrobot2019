@@ -11,72 +11,49 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team2929.robot.Robot;
-import org.usfirst.frc.team2929.robot.subsystems.Drivetrain;
-import org.usfirst.frc.team2929.robot.utility.ObjectSelect;
+import org.usfirst.frc.team2929.robot.utility.*;
 
 /**
  * An example command.  You can replace me with your own command.
  */
-public class AimAtTarget extends Command {
+public class DriveToDistance extends Command {
 	
-	private int selection;
-	
+	private double target;
 	private int finished = 0;
-	private double center;
 	
-	public AimAtTarget(ObjectSelect selector) {
+	public DriveToDistance(double distance) {
 		// Use requires() here to declare subsystem dependencies
 		requires(Robot.drivetrain);
-		selection = selector.getValue();
+		target = Maths.distance(distance);
 		
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		
-		
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		center = 0;
-		if (selection == 0 && Robot.centerX > 0) {
-			center = Robot.centerX;
-		} else if (selection == 1) {
-			if (Robot.centerX > 0 && Robot.centerX2 > 0) {
-				center = (Robot.centerX + Robot.centerX2) / 2; 
-			} else if (Robot.centerX > 0) {
-				center = Robot.centerX;
-			} else if (Robot.centerX2 > 0) {
-				center = Robot.centerX2;
-			}
-		} else if (selection == 2 && Robot.centerX2 > 0){
-			center = Robot.centerX2;
-		}
-		
-		SmartDashboard.putNumber("center command", center);
-		
-		if (center > 370) {
-			Robot.drivetrain.getDriveTrain().tankDrive(0.35, -0.35);
-		} else if (center == 0) {
-			Robot.drivetrain.getDriveTrain().tankDrive(0, 0);
-		} else if (center < 270) {
-			Robot.drivetrain.getDriveTrain().tankDrive(-0.35, 0.35);
+		double width = (Robot.r1.width + Robot.r2.width) / 2;
+		SmartDashboard.putNumber("Average Width", width);
+		SmartDashboard.putNumber("math.distance", target);
+		SmartDashboard.putNumber("math.distance width", Maths.distance(width));
+		if (Maths.distance(width) > target + 2) {
+			Robot.drivetrain.getDriveTrain().tankDrive(-0.4, -0.4);
+		} else if (Maths.distance(width) < target - 2) {
+			Robot.drivetrain.getDriveTrain().tankDrive(0.4, 0.4);
 		} else {
-			Robot.drivetrain.getDriveTrain().tankDrive(0, 0);
 			finished = 1;
 		}
-		
-		
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
 		if (finished == 0) return false;
-		else return false;
+		else return true;
 	}
 
 	// Called once after isFinished returns true

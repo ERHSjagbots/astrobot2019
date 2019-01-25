@@ -60,11 +60,13 @@ public class Robot extends TimedRobot {
 	public static double center;
 	public static double distToObj1;
 	public static double dist;
+	public static Rect r1;
 	
 	public static double centerX2;
 	public static double center2;
 	public static double distToObj2;
 	public static double dist2;
+	public static Rect r2;
 
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -98,7 +100,7 @@ public class Robot extends TimedRobot {
 			public void copyPipelineOutputs(GripPipeline pipeline) {
 	            SmartDashboard.putNumber("output size", pipeline.filterContoursOutput().size());
 				if (pipeline.filterContoursOutput().size() > 0) {
-		            Rect r1 = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
+		            r1 = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
 		            synchronized (imgLock) {
 		                centerX = r1.x + (r1.width / 2);
 		                distToObj1 = 0;
@@ -117,7 +119,7 @@ public class Robot extends TimedRobot {
 		            }
 		        }
 				if (pipeline.filterContoursOutput().size() > 1) {
-		            Rect r2 = Imgproc.boundingRect(pipeline.filterContoursOutput().get(1));
+		            r2 = Imgproc.boundingRect(pipeline.filterContoursOutput().get(1));
 		            synchronized (imgLock) {
 		                centerX2 = r2.x + (r2.width / 2);
 		                distToObj2 = 0;
