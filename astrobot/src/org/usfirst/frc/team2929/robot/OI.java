@@ -9,6 +9,7 @@ package org.usfirst.frc.team2929.robot;
 
 import org.usfirst.frc.team2929.robot.commands.AimAtTarget;
 import org.usfirst.frc.team2929.robot.commands.DriveToDistance;
+import org.usfirst.frc.team2929.robot.commands.RampCommandsystem;
 import org.usfirst.frc.team2929.robot.utility.ObjectSelect;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -53,6 +54,7 @@ public class OI {
 	
 	public JoystickButton aimAtThing;
 	public JoystickButton runAtThing;
+	public JoystickButton rampButton;
 	
 	public OI() {
 		
@@ -64,6 +66,9 @@ public class OI {
 		
 		runAtThing = new JoystickButton(RJoystick, 1);
 		runAtThing.whenPressed(new DriveToDistance(36));
+		
+		rampButton = new JoystickButton(LJoystick, 2);
+		rampButton.whenPressed(new RampCommandsystem());
 	}
 	
 	public Joystick getLJoystick() {

@@ -13,13 +13,21 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 
-public class RampSubsystem extends Subsystem {
+public class RampSubsystem extends Subsystem
+{
+	public double speed;
+	
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 	WPI_TalonSRX rampMotor = new WPI_TalonSRX(7);
-	public void initDefaultCommand() {
+	public void initDefaultCommand()
+	{
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
+	}
 	
+	public void setSpeed()
+	{
+		rampMotor.set(speed);
 	}
 }
