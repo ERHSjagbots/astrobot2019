@@ -19,24 +19,28 @@ import org.usfirst.frc.team2929.robot.utility.*;
 public class DriveToDistance extends Command {
 	
 	private double target;
-	private int finished = 0;
+	private boolean finished = false;
+	private double width = 0;
 	
 	public DriveToDistance(double distance) {
 		// Use requires() here to declare subsystem dependencies
 		requires(Robot.drivetrain);
-		target = Maths.distance(distance);
+		target = distance;
+		finished = false;
 		
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
+		width = 0;
+		finished = false;
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		double width = (Robot.r1.width + Robot.r2.width) / 2;
+		width = (Robot.r1.width + Robot.r2.width) / 2;
 		SmartDashboard.putNumber("Average Width", width);
 		SmartDashboard.putNumber("math.distance", target);
 		SmartDashboard.putNumber("math.distance width", Maths.distance(width));
@@ -45,15 +49,14 @@ public class DriveToDistance extends Command {
 		} else if (Maths.distance(width) < target - 2) {
 			Robot.drivetrain.getDriveTrain().tankDrive(0.4, 0.4);
 		} else {
-			finished = 1;
+			finished = true;
 		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		if (finished == 0) return false;
-		else return true;
+		return finished;
 	}
 
 	// Called once after isFinished returns true

@@ -63,7 +63,7 @@ public class OI {
 		aimAtThing.whenPressed(new AimAtTarget(ObjectSelect.CENTER));
 		
 		runAtThing = new JoystickButton(RJoystick, 1);
-		runAtThing.whenPressed(new DriveToDistance(36));
+		runAtThing.whenPressed(new DriveToDistance(48));
 	}
 	
 	public Joystick getLJoystick() {
