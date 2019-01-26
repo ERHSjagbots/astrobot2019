@@ -34,5 +34,20 @@ public class RobotMap {
 	public static final int armLS1 = 1;
 	public static final int armMotor = 4;
 	
+	//Ramp
+	public static final int rampMotor = 5;
+	
+	//Grabber
+	public static final int grabberMotor = 6;
+	
+	public static final int gsolenoid1L = 0;
+	public static final int gsolenoid1R = 1;
+	public static final int gsolenoid2L = 2;
+	public static final int gsolenoid2R = 3;
+	
+	//Lift
+	public static final int lsolenoidL = 4;
+	public static final int lsolenoidR = 5;
+	
 	//$Robots&in#SPACE!!
 }

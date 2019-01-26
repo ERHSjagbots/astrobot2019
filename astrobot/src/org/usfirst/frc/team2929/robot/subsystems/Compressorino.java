@@ -7,27 +7,33 @@
 
 package org.usfirst.frc.team2929.robot.subsystems;
 
-import org.usfirst.frc.team2929.robot.RobotMap;
-
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 
-public class RampSubsystem extends Subsystem {
+public class Compressorino extends Subsystem {
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
+
+	Compressor comp = new Compressor();
 	
-	WPI_TalonSRX rampMotor = new WPI_TalonSRX(RobotMap.rampMotor);
-	
-	public void initDefaultCommand() {
-		// Set the default command for a subsystem here.
-		// setDefaultCommand(new MySpecialCommand());
-	
+	public Compressorino() {
+		comp.setClosedLoopControl(true);
+		comp.start();
 	}
 	
-	public void moveMotor(double speed) {
-		rampMotor.set(speed);
+	public void initDefaultCommand() {
+		
+		
+		// Set the default command for a subsystem here.
+		// setDefaultCommand(new MySpecialCommand());
+	}
+	
+	public void compOn() {
+		comp.start();
+	}
+	
+	public void compOff() {
+		comp.stop();
 	}
 }

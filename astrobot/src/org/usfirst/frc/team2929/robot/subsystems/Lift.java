@@ -9,25 +9,31 @@ package org.usfirst.frc.team2929.robot.subsystems;
 
 import org.usfirst.frc.team2929.robot.RobotMap;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 
-public class RampSubsystem extends Subsystem {
+public class Lift extends Subsystem {
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
-	
-	WPI_TalonSRX rampMotor = new WPI_TalonSRX(RobotMap.rampMotor);
+
+	DoubleSolenoid liftSolenoid = new DoubleSolenoid(RobotMap.lsolenoidL, RobotMap.lsolenoidR);
 	
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
-	
 	}
 	
-	public void moveMotor(double speed) {
-		rampMotor.set(speed);
+	public void pushSolenoid() {
+		liftSolenoid.set(Value.kForward);
+	}
+	
+	public void reverseSolenoid() {
+		liftSolenoid.set(Value.kReverse);
+	}
+	
+	public void offSolenoid() {
+		liftSolenoid.set(Value.kOff);
 	}
 }

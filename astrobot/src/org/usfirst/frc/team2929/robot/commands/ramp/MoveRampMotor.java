@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team2929.robot.commands;
+package org.usfirst.frc.team2929.robot.commands.ramp;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team2929.robot.Robot;
@@ -13,10 +13,15 @@ import org.usfirst.frc.team2929.robot.Robot;
 /**
  * An example command.  You can replace me with your own command.
  */
-public class RampCommandsystem extends Command {
-	public RampCommandsystem() {
+public class MoveRampMotor extends Command {
+	
+	private double speed;
+	
+	public MoveRampMotor(double speed) {
 		// Use requires() here to declare subsystem dependencies
-		requires(Robot.m_subsystem);
+		requires(Robot.ramp);
+		this.speed = speed;
+		
 	}
 
 	// Called just before this Command runs the first time
@@ -27,6 +32,7 @@ public class RampCommandsystem extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
+		Robot.ramp.moveMotor(speed);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
