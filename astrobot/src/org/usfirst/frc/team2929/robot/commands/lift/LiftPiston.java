@@ -16,13 +16,12 @@ import org.usfirst.frc.team2929.robot.utility.PistonSelect;
  */
 public class LiftPiston extends Command {
 	
-	public int select;
+	//public int select;
 	
-	public LiftPiston(PistonSelect selection) {
+	public LiftPiston(/* PistonSelect selection */) {
 		// Use requires() here to declare subsystem dependencies
 		requires(Robot.grabbie);
-		select = selection.getValue();
-		setTimeout(0.5);
+		//select = selection.getValue();
 		
 	}
 
@@ -34,9 +33,9 @@ public class LiftPiston extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		if (select == 0) {
+		if (Robot.m_oi.getLJoystick().getPOV(0) <= 45 || Robot.m_oi.getLJoystick().getPOV(0) >= 315) {
 			Robot.grabbie.pushGrabbie();
-		} else if (select == 1) {
+		} else if (Robot.m_oi.getLJoystick().getPOV(0) <= 225 && Robot.m_oi.getLJoystick().getPOV(0) >= 135) {
 			Robot.grabbie.reverseGrabbie();
 		} else {
 			Robot.grabbie.offGrabbie();
@@ -46,7 +45,7 @@ public class LiftPiston extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return isTimedOut();
+		return false;
 	}
 
 	// Called once after isFinished returns true

@@ -15,12 +15,12 @@ import org.usfirst.frc.team2929.robot.Robot;
  */
 public class MoveGrabbie extends Command {
 	
-	private double speed;
+	//private double speed;
 	
-	public MoveGrabbie(double speed) {
+	public MoveGrabbie(/* double speed */) {
 		// Use requires() here to declare subsystem dependencies
 		requires(Robot.grabbie);
-		this.speed = speed;
+		//this.speed = speed;
 		
 	}
 
@@ -32,7 +32,21 @@ public class MoveGrabbie extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		Robot.grabbie.setMotorSpeed(speed);
+		if (Robot.m_oi.getRJoystick().getPOV(0) >= 45 && Robot.m_oi.getRJoystick().getPOV(0) <= 135) {
+			if (!Robot.grabbie.isRSwitchSet()) {
+				Robot.grabbie.setMotorSpeed(0);
+			} else {
+				Robot.grabbie.setMotorSpeed(0.5);
+			}
+		} else if (Robot.m_oi.getRJoystick().getPOV(0) >= 225 && Robot.m_oi.getRJoystick().getPOV(0) <= 315) {
+			if (!Robot.grabbie.isLSwitchSet()) {
+				Robot.grabbie.setMotorSpeed(0);
+			} else {
+				Robot.grabbie.setMotorSpeed(-0.5);
+			}
+		} else {
+			Robot.grabbie.setMotorSpeed(0);
+		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

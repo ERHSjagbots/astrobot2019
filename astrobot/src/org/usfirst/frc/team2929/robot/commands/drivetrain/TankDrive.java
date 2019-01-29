@@ -5,58 +5,36 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team2929.robot.commands;
+package org.usfirst.frc.team2929.robot.commands.drivetrain;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 import org.usfirst.frc.team2929.robot.Robot;
-import org.usfirst.frc.team2929.robot.utility.*;
+import org.usfirst.frc.team2929.robot.subsystems.Drivetrain;
 
 /**
  * An example command.  You can replace me with your own command.
  */
-public class DriveToDistance extends Command {
-	
-	private double target;
-	private boolean finished = false;
-	private double width = 0;
-	
-	public DriveToDistance(double distance) {
+public class TankDrive extends Command {
+	public TankDrive() {
 		// Use requires() here to declare subsystem dependencies
 		requires(Robot.drivetrain);
-		target = distance;
-		finished = false;
-		
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		width = 0;
-		finished = false;
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		width = (Robot.r1.width + Robot.r2.width) / 2;
-		SmartDashboard.putNumber("Average Width", width);
-		SmartDashboard.putNumber("math.distance", target);
-		SmartDashboard.putNumber("math.distance width", Maths.distance(width));
-		if (Maths.distance(width) > target + 2) {
-			Robot.drivetrain.getDriveTrain().tankDrive(-0.4, -0.4);
-		} else if (Maths.distance(width) < target - 2) {
-			Robot.drivetrain.getDriveTrain().tankDrive(0.4, 0.4);
-		} else {
-			finished = true;
-		}
+		Robot.drivetrain.getDriveTrain().tankDrive(Robot.m_oi.getRJoystick().getY(),Robot.m_oi.getLJoystick().getY());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return finished;
+		return false;
 	}
 
 	// Called once after isFinished returns true

@@ -8,11 +8,13 @@
 package org.usfirst.frc.team2929.robot.subsystems;
 
 import org.usfirst.frc.team2929.robot.RobotMap;
-import org.usfirst.frc.team2929.robot.commands.TankDrive;
+import org.usfirst.frc.team2929.robot.commands.drivetrain.TankDrive;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -33,6 +35,8 @@ public class Drivetrain extends Subsystem {
 	public static SpeedControllerGroup LDrivetrain;
 	public static SpeedControllerGroup RDrivetrain;
 	public static DifferentialDrive drivetrain;
+	
+	public static Encoder lEncoder;
 	
 	public Drivetrain(){
 		
