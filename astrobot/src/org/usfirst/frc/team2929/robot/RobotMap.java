@@ -39,6 +39,7 @@ public class RobotMap {
 	
 	//Grabber
 	public static final int grabberMotor = 6;
+	public static final int rotateMotor = 7;
 	
 	public static final int gsolenoid1L = 0;
 	public static final int gsolenoid1R = 1;

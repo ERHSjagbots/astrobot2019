@@ -21,6 +21,7 @@ public class Grabber extends Subsystem {
 	// here. Call these from Commands.
 
 	WPI_TalonSRX grabberMotor = new WPI_TalonSRX(RobotMap.grabberMotor);
+	WPI_TalonSRX rotateMotor = new WPI_TalonSRX(RobotMap.rotateMotor);
 	
 	DoubleSolenoid pushSolenoid1 = new DoubleSolenoid(RobotMap.gsolenoid1L,RobotMap.gsolenoid1R);
 	DoubleSolenoid pushSolenoid2 = new DoubleSolenoid(RobotMap.gsolenoid2L,RobotMap.gsolenoid2R);
@@ -47,5 +48,10 @@ public class Grabber extends Subsystem {
 	
 	public void setMotorSpeed(double speed) {
 		grabberMotor.set(speed);
+	}
+
+	public void rotateMotorSpeed(double speed) {
+		rotateMotor.set(speed);
+		
 	}
 }

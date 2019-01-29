@@ -28,7 +28,6 @@ import org.opencv.core.Rect;
 import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team2929.robot.commands.AimAtTarget;
 import org.usfirst.frc.team2929.robot.commands.ExampleCommand;
-import org.usfirst.frc.team2929.robot.subsystems.Arm;
 import org.usfirst.frc.team2929.robot.subsystems.Compressorino;
 import org.usfirst.frc.team2929.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team2929.robot.subsystems.ExampleSubsystem;
@@ -49,7 +48,6 @@ import org.usfirst.frc.team2929.robot.vision.GripPipeline;
 public class Robot extends TimedRobot {
 	public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
 	public static Drivetrain drivetrain = new Drivetrain();
-	public static Arm arm = new Arm();
 	public static OI m_oi;
 	public static RampSubsystem ramp = new RampSubsystem();
 	public static Lift lift = new Lift();
