@@ -1,10 +1,3 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package org.usfirst.frc.team2929.robot.commands.auto;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -14,35 +7,66 @@ import org.usfirst.frc.team2929.robot.Robot;
 import org.usfirst.frc.team2929.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team2929.robot.utility.ObjectSelect;
 
-/**
- * An example command.  You can replace me with your own command.
- */
 public class AimAtTarget extends Command {
 	
 	private int selection;
 	
-	private int finished = 0;
+	private boolean finished;
 	private double center;
 	
+	private boolean foundObject;
+	
+	/**
+	 * Uses vision to find an object and rotate the robot to look at said object.
+	 * 
+	 * @param  selector an ObjectSelect item saying to look at the left, middle, or right of the objects
+	 * @author         Matthew Brosnon
+	 */
 	public AimAtTarget(ObjectSelect selector) {
-		// Use requires() here to declare subsystem dependencies
+		
 		requires(Robot.drivetrain);
+		finished = false;
 		selection = selector.getValue();
-		//setTimeout(10);
+		foundObject = false;
 		
 	}
 
-	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
 		
-		
+		//Sees if the robot sees an object
+		if (selection == 0 || selection == 1) {
+			if(!(Robot.centerX == 0)) {
+				foundObject = true;
+			}
+		} else if (selection == 2){
+			if(!(Robot.centerX2 == 0)) {
+				foundObject = true;
+			}
+		}
 	}
 
-	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
+		
+		//Finds object before running code
+		while (!foundObject) {
+			Robot.drivetrain.getDriveTrain().tankDrive(0.35, -0.35);
+			if (selection == 0 || selection == 1) {
+				if(!(Robot.centerX == 0)) {
+					foundObject = true;
+				}
+			} else if (selection == 2){
+				if(!(Robot.centerX2 == 0)) {
+					foundObject = true;
+				}
+			}
+		}
+		
+		//Sets center to 0 in case there's no object to be found
 		center = 0;
+		
+		//Sets the center of the object
 		if (selection == 0 && Robot.centerX > 0) {
 			center = Robot.centerX;
 		} else if (selection == 1) {
@@ -59,6 +83,7 @@ public class AimAtTarget extends Command {
 		
 		SmartDashboard.putNumber("center command", center);
 		
+		//Turns the bot in the direction of the center of the object
 		if (center > 370) {
 			Robot.drivetrain.getDriveTrain().tankDrive(0.35, -0.35);
 		} else if (center == 0) {
@@ -67,26 +92,21 @@ public class AimAtTarget extends Command {
 			Robot.drivetrain.getDriveTrain().tankDrive(-0.35, 0.35);
 		} else {
 			Robot.drivetrain.getDriveTrain().tankDrive(0, 0);
-			finished = 1;
+			finished = true;
 		}
 		
 		
 	}
 
-	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		if (finished == 0) return false;
-		else return false;
+		return finished;
 	}
 
-	// Called once after isFinished returns true
 	@Override
 	protected void end() {
 	}
 
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
 	@Override
 	protected void interrupted() {
 	}

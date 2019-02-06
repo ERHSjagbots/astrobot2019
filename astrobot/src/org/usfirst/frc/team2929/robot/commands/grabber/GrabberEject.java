@@ -6,6 +6,12 @@ import org.usfirst.frc.team2929.robot.utility.PistonSelect;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class GrabberEject extends CommandGroup{
+	
+	/**
+	 * Ejects cargo from the grabber. 
+	 * 
+	 * @author Matthew Brosnon
+	 */
 	public GrabberEject() {
 		addSequential(new GrabberPush(PistonSelect.FORWARD));
 		addSequential(new Timeout(0.5));

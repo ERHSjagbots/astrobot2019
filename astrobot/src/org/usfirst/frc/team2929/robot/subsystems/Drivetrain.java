@@ -10,6 +10,7 @@ package org.usfirst.frc.team2929.robot.subsystems;
 import org.usfirst.frc.team2929.robot.RobotMap;
 import org.usfirst.frc.team2929.robot.commands.drivetrain.TankDrive;
 
+import com.ctre.CANTalon;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
@@ -26,10 +27,10 @@ public class Drivetrain extends Subsystem {
 
 	
 	//setup of the victors of the drivetrain
-	public static WPI_VictorSPX L1TalonSRX;
-	public static WPI_VictorSPX L2TalonSRX;
-	public static WPI_VictorSPX R1TalonSRX;
-	public static WPI_VictorSPX R2TalonSRX;
+	public static WPI_TalonSRX L1TalonSRX;
+	public static WPI_TalonSRX L2TalonSRX;
+	public static WPI_TalonSRX R1TalonSRX;
+	public static WPI_TalonSRX R2TalonSRX;
 	
 	//getting differential drive
 	public static SpeedControllerGroup LDrivetrain;
@@ -37,19 +38,26 @@ public class Drivetrain extends Subsystem {
 	public static DifferentialDrive drivetrain;
 	
 	public static Encoder lEncoder;
+	public static Encoder rEncoder;
 	
 	public Drivetrain(){
 		
 		//initialization using constructor
-		L1TalonSRX = new WPI_VictorSPX(RobotMap.dL1TalonSRX);
-		L2TalonSRX = new WPI_VictorSPX(RobotMap.dL2TalonSRX);
-		R1TalonSRX = new WPI_VictorSPX(RobotMap.dR1TalonSRX);
-		R2TalonSRX = new WPI_VictorSPX(RobotMap.dR2TalonSRX);
+		L1TalonSRX = new WPI_TalonSRX(RobotMap.dL1TalonSRX);
+		L2TalonSRX = new WPI_TalonSRX(RobotMap.dL2TalonSRX);
+		R1TalonSRX = new WPI_TalonSRX(RobotMap.dR1TalonSRX);
+		R2TalonSRX = new WPI_TalonSRX(RobotMap.dR2TalonSRX);
 		
 		LDrivetrain = new SpeedControllerGroup(L1TalonSRX, L2TalonSRX);
 		RDrivetrain = new SpeedControllerGroup(R1TalonSRX, R2TalonSRX);
 		drivetrain = new DifferentialDrive(LDrivetrain, RDrivetrain);
 		
+		lEncoder = new Encoder(0,1);
+		rEncoder = new Encoder(2,3);
+		
+		lEncoder.setDistancePerPulse(1/360);
+		rEncoder.setDistancePerPulse(1/360);
+		encoderReset();
 	}
 	
 	public void initDefaultCommand() {
@@ -59,6 +67,45 @@ public class Drivetrain extends Subsystem {
 	}
 	
 	public DifferentialDrive getDriveTrain() {
+		
 		return drivetrain;
+	}
+	
+	public void encoderReset() {
+		
+		lEncoder.reset();
+		rEncoder.reset();
+	}
+	
+	public Encoder getLEncoder() {
+		return lEncoder;
+	}
+	
+	public Encoder getREncoder() {
+		return rEncoder;
+	}
+	
+	public void motorInverted(boolean inverted) {
+		if (inverted) {
+			L1TalonSRX.setInverted(true);
+			L2TalonSRX.setInverted(true);
+			R1TalonSRX.setInverted(true);
+			R2TalonSRX.setInverted(true);
+		} else {
+			L1TalonSRX.setInverted(false);
+			L2TalonSRX.setInverted(false);
+			R1TalonSRX.setInverted(false);
+			R2TalonSRX.setInverted(false);
+		}
+	}
+	
+	public void encoderInverted(boolean inverted) {
+		if (inverted) {
+			lEncoder.setReverseDirection(true);
+			rEncoder.setReverseDirection(true);
+		} else {
+			lEncoder.setReverseDirection(false);
+			rEncoder.setReverseDirection(false);
+		}
 	}
 }
