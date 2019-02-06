@@ -53,5 +53,4 @@ public class RobotMap {
 	public static final int lsolenoidL = 4;
 	public static final int lsolenoidR = 5;
 	
-	//$Robots&in#SPACE!!
 }

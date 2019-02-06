@@ -4,16 +4,20 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team2929.robot.Robot;
 import org.usfirst.frc.team2929.robot.subsystems.Drivetrain;
 
-
+/**
+ * Command to move the drivetrain using {@link tankDrive} method.
+ * 
+ * @author          Matthew Brosnon
+ */
 public class TankDrive extends Command {
 	
 	/**
 	 * Gets values from joysticks to move the drivetrain.
 	 * 
-	 * @author Matthew Brosnon
 	 */
 	public TankDrive() {
 		
+		//requires drivetrain
 		requires(Robot.drivetrain);
 	}
 
@@ -32,6 +36,7 @@ public class TankDrive extends Command {
 	
 	@Override
 	protected boolean isFinished() {
+		//never finish command
 		return false;
 	}
 

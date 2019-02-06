@@ -1,39 +1,56 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package org.usfirst.frc.team2929.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-
+/**
+ * Setup for compressorino.
+ * 
+ * @author Matthew Brosnon
+ */
 public class Compressorino extends Subsystem {
-	// Put methods for controlling this subsystem
-	// here. Call these from Commands.
+	
 
 	Compressor comp = new Compressor();
 	
+	/**
+	 * Sets closed loop control and starts compressor.
+	 * 
+	 */
 	public Compressorino() {
+		
+		//setup for compressor
 		comp.setClosedLoopControl(true);
 		comp.start();
 	}
 	
+	/**
+	 * Defines the default command. Called when the subsystem is made.
+	 * 
+	 */
 	public void initDefaultCommand() {
 		
+		//setDefaultCommand();
 		
-		// Set the default command for a subsystem here.
-		// setDefaultCommand(new MySpecialCommand());
 	}
 	
+	/**
+	 * Turns compressor on.
+	 * 
+	 */
 	public void compOn() {
+		
+		//start compressor
 		comp.start();
 	}
 	
+	/**
+	 * Turns compressor off.
+	 * 
+	 */
 	public void compOff() {
+		
+		//stop compressor
 		comp.stop();
 	}
 }

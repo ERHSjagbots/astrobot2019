@@ -10,14 +10,20 @@ import org.usfirst.frc.team2929.robot.utility.PistonSelect;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
+/**
+ * Autonomous code for grabber manipulation.
+ * 
+ * @author          Matthew Brosnon
+ */
 public class AutoGrabber extends CommandGroup{
+	
 	/**
 	 * Uses vision to go to a cargo bay and put cargo in it on levels 1 & 2.
 	 * 
-	 * @param  level which level to put the cargo in
-	 * @author      Matthew Brosnon
+	 * @param level which level to put the cargo in
 	 */
 	public AutoGrabber(int level) {
+		//adds commands based on level
 		if (level == 1) {
 			addSequential(new AimAtTarget(ObjectSelect.CENTER));
 			addSequential(new DriveToDistance(12));

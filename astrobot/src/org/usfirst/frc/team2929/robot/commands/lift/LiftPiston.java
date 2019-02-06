@@ -5,20 +5,27 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team2929.robot.Robot;
 import org.usfirst.frc.team2929.robot.utility.PistonSelect;
 
-
+/**
+ * Command to manipulate the piston on the lift.
+ * 
+ * @author          Matthew Brosnon
+ */
 public class LiftPiston extends Command {
 	
+	//variable creation
 	public int select;
 	public boolean finished;
 	
 	/**
 	 * Lifts lift piston depending on joystick input.
 	 * 
-	 * @author Matthew Brosnon
 	 */
 	public LiftPiston() {
 		
+		//requires grabbie subsystem
 		requires(Robot.grabbie);
+		
+		//sets select to a value not able to be reached by PistonSelect enum
 		select = 3;
 		
 	}
@@ -27,11 +34,16 @@ public class LiftPiston extends Command {
 	 * Manipulates lift piston depending on a value.
 	 * 
 	 * @param  selection enum on what direction to go on
-	 * @author           Matthew Brosnon
 	 */
 	public LiftPiston(PistonSelect selection) {
 		
+		//requires grabbie subsystem
+		requires(Robot.grabbie);
+		
+		//sets select to PistonSelect value
 		select = selection.getValue();
+		
+		//sets timeout to 1 second
 		setTimeout(1);
 	}
 
@@ -67,7 +79,12 @@ public class LiftPiston extends Command {
 	
 	@Override
 	protected boolean isFinished() {
-		return false;
+		//changes when command finishes depending on constructor used
+		if (select == 3) {
+			return false;
+		} else {
+			return isTimedOut();
+		}
 	}
 
 	

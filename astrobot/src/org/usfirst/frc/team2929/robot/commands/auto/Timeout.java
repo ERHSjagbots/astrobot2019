@@ -7,17 +7,21 @@ import org.usfirst.frc.team2929.robot.Robot;
 import org.usfirst.frc.team2929.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team2929.robot.utility.ObjectSelect;
 
-
+/**
+ * Autonomous command to make the bot do nothing for a certain amount of time
+ * 
+ * @author          Matthew Brosnon
+ */
 public class Timeout extends Command {
 	
 	/**
 	 * Makes the bot wait a set amount of time.
 	 * 
 	 * @param  time time needed to wait
-	 * @author      Matthew Brosnon
 	 */
 	public Timeout(double time) {
 		
+		//set timeout
 		setTimeout(time);
 		
 	}
@@ -38,6 +42,7 @@ public class Timeout extends Command {
 	
 	@Override
 	protected boolean isFinished() {
+		//finish when we're timed out
 		return isTimedOut();
 	}
 

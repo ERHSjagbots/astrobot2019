@@ -1,10 +1,3 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package org.usfirst.frc.team2929.robot.subsystems;
 
 import org.usfirst.frc.team2929.robot.RobotMap;
@@ -21,7 +14,9 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 /**
- * An example subsystem.  You can replace me with your own Subsystem.
+ * Drivetrain components and methods.
+ * 
+ * @author Matthew Brosnon
  */
 public class Drivetrain extends Subsystem {
 
@@ -37,9 +32,15 @@ public class Drivetrain extends Subsystem {
 	public static SpeedControllerGroup RDrivetrain;
 	public static DifferentialDrive drivetrain;
 	
+	//setup of encoders
 	public static Encoder lEncoder;
 	public static Encoder rEncoder;
 	
+	
+	/**
+	 * Sets values of all the motors, drivetrain, and encoders.
+	 * 
+	 */
 	public Drivetrain(){
 		
 		//initialization using constructor
@@ -60,32 +61,68 @@ public class Drivetrain extends Subsystem {
 		encoderReset();
 	}
 	
+	/**
+	 * Defines the default command. Called when the subsystem is made.
+	 * 
+	 */
 	public void initDefaultCommand() {
 		
 		//setting default command to tankdrive
 		setDefaultCommand(new TankDrive());
 	}
 	
+	/**
+	 * Returns the robot drivetrain.
+	 * 
+	 * @return DifferentialDrive robot drivetrain
+	 */
 	public DifferentialDrive getDriveTrain() {
 		
+		//getting a drivertrain
 		return drivetrain;
 	}
 	
+	/**
+	 * Resets encoders.
+	 * 
+	 */
 	public void encoderReset() {
 		
+		//resets encoders
 		lEncoder.reset();
 		rEncoder.reset();
 	}
 	
+	/**
+	 * Returns the left drivetrain encoder.
+	 * 
+	 * @return Encoder left drivetrain encoder
+	 */
 	public Encoder getLEncoder() {
+		
+		//returns left encoder
 		return lEncoder;
 	}
 	
+	/**
+	 * Returns the right drivetrain encoder.
+	 * 
+	 * @return Encoder right drivetrain encoder
+	 */
 	public Encoder getREncoder() {
+		
+		//returns right encoder
 		return rEncoder;
 	}
 	
+	/**
+	 * Inverts motor controls or un-inverts them
+	 * 
+	 * @param inverted true or false depending on whether you want motors inverted or not
+	 */
 	public void motorInverted(boolean inverted) {
+		
+		//uses input to change inverted method on motors
 		if (inverted) {
 			L1TalonSRX.setInverted(true);
 			L2TalonSRX.setInverted(true);
@@ -99,7 +136,14 @@ public class Drivetrain extends Subsystem {
 		}
 	}
 	
+	/**
+	 * Inverts encoder readings or un-inverts them
+	 * 
+	 * @param inverted true or false depending on whether you want encoders inverted or not
+	 */
 	public void encoderInverted(boolean inverted) {
+		
+		//uses input to change inverted method for encoders
 		if (inverted) {
 			lEncoder.setReverseDirection(true);
 			rEncoder.setReverseDirection(true);

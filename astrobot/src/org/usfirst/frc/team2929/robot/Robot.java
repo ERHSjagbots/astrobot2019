@@ -1,10 +1,3 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package org.usfirst.frc.team2929.robot;
 
 import edu.wpi.cscore.CvSource;
@@ -45,7 +38,6 @@ import org.usfirst.frc.team2929.robot.vision.GripPipeline;
  * creating this project, you must also update the build.properties file in the
  * project.
  */
-
 public class Robot extends TimedRobot {
 	public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
 	public static Drivetrain drivetrain = new Drivetrain();

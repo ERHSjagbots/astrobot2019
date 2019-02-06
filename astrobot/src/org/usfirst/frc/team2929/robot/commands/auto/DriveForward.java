@@ -3,6 +3,11 @@ package org.usfirst.frc.team2929.robot.commands.auto;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team2929.robot.Robot;
 
+/**
+ * Autonomous command to drive forward a set distance.
+ * 
+ * @author          Matthew Brosnon
+ */
 public class DriveForward extends Command {
 	
 	private double distance;
@@ -12,10 +17,13 @@ public class DriveForward extends Command {
 	 * Drives straight a set distance.
 	 * 
 	 * @param  distance double of how far you need to drive
-	 * @author          Matthew Brosnon
 	 */
 	public DriveForward(double distance) {
+		
+		//requires drivetrain subsystem
 		requires(Robot.drivetrain);
+		
+		//variable setup
 		this.distance = distance;
 		finished = false;
 		
@@ -55,6 +63,7 @@ public class DriveForward extends Command {
 	
 	@Override
 	protected boolean isFinished() {
+		//finished if code says we're finished
 		return finished;
 	}
 

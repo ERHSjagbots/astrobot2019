@@ -7,8 +7,14 @@ import org.usfirst.frc.team2929.robot.Robot;
 import org.usfirst.frc.team2929.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team2929.robot.utility.ObjectSelect;
 
+/**
+ * Autonomous command to look at a vision target
+ * 
+ * @author          Matthew Brosnon
+ */
 public class AimAtTarget extends Command {
 	
+	//variables
 	private int selection;
 	
 	private boolean finished;
@@ -20,11 +26,13 @@ public class AimAtTarget extends Command {
 	 * Uses vision to find an object and rotate the robot to look at said object.
 	 * 
 	 * @param  selector an ObjectSelect item saying to look at the left, middle, or right of the objects
-	 * @author         Matthew Brosnon
 	 */
 	public AimAtTarget(ObjectSelect selector) {
 		
+		//requires drivetrain system
 		requires(Robot.drivetrain);
+		
+		//variable setup depending on parameter
 		finished = false;
 		selection = selector.getValue();
 		foundObject = false;
@@ -100,6 +108,7 @@ public class AimAtTarget extends Command {
 
 	@Override
 	protected boolean isFinished() {
+		//finishes when the command is finished
 		return finished;
 	}
 

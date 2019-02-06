@@ -6,8 +6,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team2929.robot.Robot;
 import org.usfirst.frc.team2929.robot.utility.*;
 
+/**
+ * Autonomous command to drive to a distance from a vision object
+ * 
+ * @author          Matthew Brosnon
+ */
 public class DriveToDistance extends Command {
 	
+	//variables
 	private double target;
 	private boolean finished = false;
 	private double width = 0;
@@ -16,11 +22,13 @@ public class DriveToDistance extends Command {
 	 * Drives straight to a set distance from an object.
 	 * 
 	 * @param  distance double of how far you need to be away from object
-	 * @author          Matthew Brosnon
 	 */
 	public DriveToDistance(double distance) {
 		
+		//requires drivetrain subsystem
 		requires(Robot.drivetrain);
+		
+		//variable setup
 		target = distance;
 		finished = false;
 		
@@ -57,6 +65,7 @@ public class DriveToDistance extends Command {
 	
 	@Override
 	protected boolean isFinished() {
+		//finished when we're finished
 		return finished;
 	}
 

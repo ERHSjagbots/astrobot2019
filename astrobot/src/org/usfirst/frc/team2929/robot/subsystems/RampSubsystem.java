@@ -14,19 +14,30 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
-
+/**
+ * Setup and methods for the ramp.
+ * 
+ * @author Matthew Brosnon
+ */
 public class RampSubsystem extends Subsystem {
-	// Put methods for controlling this subsystem
-	// here. Call these from Commands.
 	
 	WPI_TalonSRX rampMotor = new WPI_TalonSRX(RobotMap.rampMotor);
 	
+	/**
+	 * Defines the default command. Called when the subsystem is made.
+	 * 
+	 */
 	public void initDefaultCommand() {
-		// Set the default command for a subsystem here.
-		// setDefaultCommand(new MySpecialCommand());
-	
+		
+		//not making a default command
+		//setDefaultCommand();
 	}
 	
+	/**
+	 * Moves the ramp motor at a certain speed.
+	 * 
+	 * @param speed speed the motors move.
+	 */
 	public void moveMotor(double speed) {
 		rampMotor.set(speed);
 	}

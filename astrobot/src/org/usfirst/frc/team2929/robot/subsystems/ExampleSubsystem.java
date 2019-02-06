@@ -9,7 +9,10 @@ package org.usfirst.frc.team2929.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-
+/**
+ * FRC Generated template for creating subsystems.
+ * 
+ */
 public class ExampleSubsystem extends Subsystem {
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.

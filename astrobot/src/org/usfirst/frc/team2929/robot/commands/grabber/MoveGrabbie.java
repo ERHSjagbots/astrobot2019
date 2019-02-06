@@ -5,6 +5,11 @@ package org.usfirst.frc.team2929.robot.commands.grabber;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team2929.robot.Robot;
 
+/**
+ * Command to manipulate grabbie motor.
+ * 
+ * @author          Matthew Brosnon
+ */
 public class MoveGrabbie extends Command {
 	
 	//private double speed;
@@ -12,10 +17,10 @@ public class MoveGrabbie extends Command {
 	/**
 	 * Moves grabbie left or right depending on joystick input.
 	 * 
-	 * @author Matthew Brosnon
 	 */
 	public MoveGrabbie(/* double speed */) {
 		
+		//requries grabbie subsystem
 		requires(Robot.grabbie);
 		//this.speed = speed;
 		
@@ -50,6 +55,7 @@ public class MoveGrabbie extends Command {
 	
 	@Override
 	protected boolean isFinished() {
+		//never finish command
 		return false;
 	}
 

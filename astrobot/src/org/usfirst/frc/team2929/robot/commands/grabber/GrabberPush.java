@@ -4,21 +4,30 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team2929.robot.Robot;
 import org.usfirst.frc.team2929.robot.utility.PistonSelect;
 
-
+/**
+ * Command to manipulate grabber solenoid.
+ * 
+ * @author          Matthew Brosnon
+ */
 public class GrabberPush extends Command {
 	
+	//integer to store selection
 	public int select;
 	
 	/**
 	 * Moves the pistons on the grabbies forwards, in reverse, or turns them off.
 	 * 
 	 * @param  selection direction of the pistons
-	 * @author           Matthew Brosnon
 	 */
 	public GrabberPush(PistonSelect selection) {
 		
+		//requires grabbie susbsystem
 		requires(Robot.grabbie);
+		
+		//sets value to PistonSelect value
 		select = selection.getValue();
+		
+		//sets timeout
 		setTimeout(0.5);
 		
 	}
@@ -44,6 +53,7 @@ public class GrabberPush extends Command {
 	
 	@Override
 	protected boolean isFinished() {
+		//finishes command when timeout has finished
 		return isTimedOut();
 	}
 
