@@ -12,13 +12,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.vision.VisionRunner;
 import edu.wpi.first.wpilibj.vision.VisionThread;
 
-import java.util.List;
-
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
-import org.opencv.core.MatOfPoint;
 import org.opencv.core.Rect;
 import org.opencv.imgproc.Imgproc;
+
 import org.usfirst.frc.team2929.robot.commands.ExampleCommand;
 import org.usfirst.frc.team2929.robot.commands.auto.AimAtTarget;
 import org.usfirst.frc.team2929.robot.subsystems.Compressorino;
@@ -27,6 +25,7 @@ import org.usfirst.frc.team2929.robot.subsystems.ExampleSubsystem;
 import org.usfirst.frc.team2929.robot.subsystems.Grabber;
 import org.usfirst.frc.team2929.robot.subsystems.Lift;
 import org.usfirst.frc.team2929.robot.subsystems.RampSubsystem;
+import org.usfirst.frc.team2929.robot.utility.Maths;
 import org.usfirst.frc.team2929.robot.utility.ObjectSelect;
 import org.usfirst.frc.team2929.robot.vision.Camera;
 import org.usfirst.frc.team2929.robot.vision.GripPipeline;
@@ -104,17 +103,15 @@ public class Robot extends TimedRobot {
 		                centerX = r1.x + (r1.width / 2);
 		                distToObj1 = 0;
 		                if(r1.area() > 30) {
-		                	//Change distI to object distance through formula
+		                	//change distance to actual distance
+		                	distToObj1 = Maths.distance(r1.width);
 		                }
-		                SmartDashboard.putNumber("Object 1 Width (Pixels)", r1.width);
-		                //SmartDashboard.putNumber("Object (0) Distance (Inches)", Maths.getObjectDistance(r.width, 2.0));
-		                //FRCNet.readNetworkTableContours();
+		                SmartDashboard.putNumber("Object 1 Width", r1.width);
 		            }
 		        } else {
 		        	synchronized (imgLock) {
 		                centerX = 0;
 		                distToObj1 = 0;
-		                //FRCNet.readNetworkTableContours();
 		            }
 		        }
 				if (pipeline.filterContoursOutput().size() > 1) {
@@ -123,17 +120,15 @@ public class Robot extends TimedRobot {
 		                centerX2 = r2.x + (r2.width / 2);
 		                distToObj2 = 0;
 		                if(r2.area() > 30) {
-		                	//change distI to object distance through formula
+		                	//change distance to actual distance
+		                	distToObj2 = Maths.distance(r2.width);
 		                }
-		                SmartDashboard.putNumber("Object 2 Width (Pixels)", r2.width);
-		                //SmartDashboard.putNumber("Object (1) Distance (Inches)", Maths.getObjectDistance(r2.width, 2.0));
-		                //FRCNet.readNetworkTableContours();
+		                SmartDashboard.putNumber("Object 2 Width", r2.width);
 		            }
 		        } else {
 		        	synchronized (imgLock) {
 		                centerX2 = 0;
 		                distToObj2 = 0;
-		                //FRCNet.readNetworkTableContours();
 		            }
 		        }
 				
@@ -144,10 +139,10 @@ public class Robot extends TimedRobot {
 //                    Imgproc.drawContours(contourImage, hulls, i, new Scalar(255), 3);
 //                }
                 
-				List<MatOfPoint> hulls = pipeline.convexHullsOutput();
-				SmartDashboard.putNumber("centerX", centerX);
-				SmartDashboard.putNumber("centerX2", centerX2);
-				SmartDashboard.putNumber("center", (centerX2+centerX)/2);
+//				List<MatOfPoint> hulls = pipeline.convexHullsOutput();
+//				SmartDashboard.putNumber("centerX", centerX);
+//				SmartDashboard.putNumber("centerX2", centerX2);
+//				SmartDashboard.putNumber("center", (centerX2+centerX)/2);
 				
 //                contourImage = new Mat(320, 240, CvType.CV_32SC1);
 				

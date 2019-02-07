@@ -10,6 +10,7 @@ import org.usfirst.frc.team2929.robot.Robot;
  */
 public class DriveForward extends Command {
 	
+	//variables
 	private double distance;
 	private boolean finished;
 	

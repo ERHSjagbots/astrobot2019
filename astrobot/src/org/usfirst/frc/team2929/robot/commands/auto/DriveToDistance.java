@@ -9,7 +9,7 @@ import org.usfirst.frc.team2929.robot.utility.*;
 /**
  * Autonomous command to drive to a distance from a vision object
  * 
- * @author          Matthew Brosnon
+ * @author Matthew Brosnon
  */
 public class DriveToDistance extends Command {
 	
@@ -21,7 +21,7 @@ public class DriveToDistance extends Command {
 	/**
 	 * Drives straight to a set distance from an object.
 	 * 
-	 * @param  distance double of how far you need to be away from object
+	 * @param distance double of how far you need to be away from object
 	 */
 	public DriveToDistance(double distance) {
 		
@@ -54,9 +54,22 @@ public class DriveToDistance extends Command {
 		if (width == 0) {
 			finished = true;
 		}	else if (Maths.distance(width) > target + 1) {
-			Robot.drivetrain.getDriveTrain().tankDrive(-0.5, -0.5);
+			Robot.drivetrain.encoderInverted(true);
+			if (Math.abs(Robot.drivetrain.getLEncoder().getDistance() - Robot.drivetrain.getREncoder().getDistance()) <= 0.1) {
+				Robot.drivetrain.getDriveTrain().tankDrive(-0.5, -0.5);
+			} else if (Robot.drivetrain.getLEncoder().getDistance() > Robot.drivetrain.getREncoder().getDistance()) {
+				Robot.drivetrain.getDriveTrain().tankDrive(-0.45, -0.55);
+			} else {
+				Robot.drivetrain.getDriveTrain().tankDrive(-0.55, -0.45);
+			}
 		} else if (Maths.distance(width) < target - 1) {
-			Robot.drivetrain.getDriveTrain().tankDrive(0.5, 0.5);
+			if (Math.abs(Robot.drivetrain.getLEncoder().getDistance() - Robot.drivetrain.getREncoder().getDistance()) <= 0.1) {
+				Robot.drivetrain.getDriveTrain().tankDrive(0.5, 0.5);
+			} else if (Robot.drivetrain.getLEncoder().getDistance() > Robot.drivetrain.getREncoder().getDistance()) {
+				Robot.drivetrain.getDriveTrain().tankDrive(0.45, 0.55);
+			} else {
+				Robot.drivetrain.getDriveTrain().tankDrive(0.55, 0.45);
+			}
 		} else {
 			finished = true;
 		}
@@ -72,10 +85,12 @@ public class DriveToDistance extends Command {
 	
 	@Override
 	protected void end() {
+		Robot.drivetrain.encoderInverted(false);
 	}
 
 
 	@Override
 	protected void interrupted() {
+		Robot.drivetrain.encoderInverted(false);
 	}
 }

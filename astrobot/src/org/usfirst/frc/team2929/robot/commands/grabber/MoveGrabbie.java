@@ -12,7 +12,7 @@ import org.usfirst.frc.team2929.robot.Robot;
  */
 public class MoveGrabbie extends Command {
 	
-	//private double speed;
+	private double speed;
 	
 	/**
 	 * Moves grabbie left or right depending on joystick input.
@@ -22,7 +22,22 @@ public class MoveGrabbie extends Command {
 		
 		//requries grabbie subsystem
 		requires(Robot.grabbie);
+		this.speed = 0;
 		//this.speed = speed;
+		
+	}
+	
+	/**
+	 * Moves grabbie left or right depending on parameter for a certain amount of time.
+	 * 
+	 * @param speed speed of grabbies
+	 * @param time  time to move grabbies
+	 */
+	public MoveGrabbie(double speed, double time) {
+		
+		requires(Robot.grabbie);
+		this.speed = speed;
+		setTimeout(time);
 		
 	}
 
@@ -35,20 +50,27 @@ public class MoveGrabbie extends Command {
 	@Override
 	protected void execute() {
 		//moves motor depending on joystick parameters
-		if (Robot.m_oi.getRJoystick().getPOV(0) >= 45 && Robot.m_oi.getRJoystick().getPOV(0) <= 135) {
-			if (!Robot.grabbie.isRSwitchSet()) {
-				Robot.grabbie.setMotorSpeed(0);
+		if(speed == 0) {
+			if (Robot.m_oi.getRJoystick().getPOV(0) >= 45 && Robot.m_oi.getRJoystick().getPOV(0) <= 135) {
+				if (!Robot.grabbie.isRSwitchSet()) {
+					Robot.grabbie.setMotorSpeed(0);
+				} else {
+					Robot.grabbie.setMotorSpeed(0.5);
+				}
+			} else if (Robot.m_oi.getRJoystick().getPOV(0) >= 225 && Robot.m_oi.getRJoystick().getPOV(0) <= 315) {
+				if (!Robot.grabbie.isLSwitchSet()) {
+					Robot.grabbie.setMotorSpeed(0);
+				} else {
+					Robot.grabbie.setMotorSpeed(-0.5);
+				}
 			} else {
-				Robot.grabbie.setMotorSpeed(0.5);
-			}
-		} else if (Robot.m_oi.getRJoystick().getPOV(0) >= 225 && Robot.m_oi.getRJoystick().getPOV(0) <= 315) {
-			if (!Robot.grabbie.isLSwitchSet()) {
-				Robot.grabbie.setMotorSpeed(0);
-			} else {
-				Robot.grabbie.setMotorSpeed(-0.5);
-			}
-		} else {
 			Robot.grabbie.setMotorSpeed(0);
+			}
+		}
+		
+		//moves motor is speed is given
+		else {
+			Robot.grabbie.setMotorSpeed(speed);
 		}
 	}
 
@@ -56,7 +78,8 @@ public class MoveGrabbie extends Command {
 	@Override
 	protected boolean isFinished() {
 		//never finish command
-		return false;
+		if (speed == 0) return false;
+		else return isTimedOut();
 	}
 
 	
