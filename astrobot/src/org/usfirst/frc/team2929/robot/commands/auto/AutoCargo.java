@@ -5,7 +5,7 @@ package org.usfirst.frc.team2929.robot.commands.auto;
 import org.usfirst.frc.team2929.robot.commands.auto.Timeout;
 import org.usfirst.frc.team2929.robot.commands.drivetrain.DriveForward;
 import org.usfirst.frc.team2929.robot.commands.grabber.GrabberEject;
-import org.usfirst.frc.team2929.robot.commands.lift.LiftPiston;
+import org.usfirst.frc.team2929.robot.commands.lift.LiftMotor;
 import org.usfirst.frc.team2929.robot.utility.ObjectSelect;
 import org.usfirst.frc.team2929.robot.utility.PistonSelect;
 
@@ -33,9 +33,9 @@ public class AutoCargo extends CommandGroup{
 		} else if (level == 2) {
 			addSequential(new AimAtTarget(ObjectSelect.CENTER));
 			addSequential(new DriveToDistance(12));
-			addParallel(new LiftPiston(PistonSelect.FORWARD));
+			addParallel(new LiftMotor(0.5, 0.5));
 			addSequential(new GrabberEject());
-			addSequential(new LiftPiston(PistonSelect.REVERSE));
+			addSequential(new LiftMotor(-0.5, 0.5));
 			addParallel(new DriveForward(-12));
 		}
 	}

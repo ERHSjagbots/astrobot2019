@@ -42,6 +42,12 @@ public class AimAtTarget extends Command {
 		
 	}
 	
+	/**
+	 * Uses vision to turn in a direction until it finds an object
+	 * 
+	 * @param selector ObjectSelect item on where to look at an object
+	 * @param right Direction item on which way to turn
+	 */
 	public AimAtTarget(ObjectSelect selector, Direction right) {
 		
 		//requires drivetrain system

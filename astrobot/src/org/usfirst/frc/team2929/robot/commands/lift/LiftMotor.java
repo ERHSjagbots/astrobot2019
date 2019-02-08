@@ -10,41 +10,37 @@ import org.usfirst.frc.team2929.robot.utility.PistonSelect;
  * 
  * @author          Matthew Brosnon
  */
-public class LiftPiston extends Command {
+public class LiftMotor extends Command {
 	
 	//variable creation
-	public int select;
+	public int constructor;
 	public boolean finished;
+	
+	public double speed;
 	
 	/**
 	 * Lifts lift piston depending on joystick input.
 	 * 
 	 */
-	public LiftPiston() {
+	public LiftMotor() {
 		
-		//requires grabbie subsystem
-		requires(Robot.grabbie);
+		//requires lift subsystem
+		requires(Robot.lift);
 		
-		//sets select to a value not able to be reached by PistonSelect enum
-		select = 3;
-		
+		//lets code see which constructor
+		constructor = 0;
 	}
 	
-	/**
-	 * Manipulates lift piston depending on a value.
-	 * 
-	 * @param  selection enum on what direction to go on
-	 */
-	public LiftPiston(PistonSelect selection) {
+	public LiftMotor(double speed, double timeOut) {
 		
 		//requires grabbie subsystem
-		requires(Robot.grabbie);
+		requires(Robot.lift);
 		
-		//sets select to PistonSelect value
-		select = selection.getValue();
+		//lets code see which constructor
+		constructor = 1;
 		
-		//sets timeout to 1 second
-		setTimeout(1);
+		//setup
+		this.speed = speed;
 	}
 
 	
@@ -56,23 +52,19 @@ public class LiftPiston extends Command {
 	@Override
 	protected void execute() {
 		//moves piston depending on joystick if no select value given
-		if (select == 3) {
+		if (constructor == 0) {
 			if (Robot.m_oi.getLJoystick().getPOV(0) <= 45 || Robot.m_oi.getLJoystick().getPOV(0) >= 315) {
-				Robot.grabbie.pushGrabbie();
+				Robot.grabbie.setMotorSpeed(0.5);
 			} else if (Robot.m_oi.getLJoystick().getPOV(0) <= 225 && Robot.m_oi.getLJoystick().getPOV(0) >= 135) {
-				Robot.grabbie.reverseGrabbie();
+				Robot.grabbie.setMotorSpeed(-0.5);
 			} else {
-				Robot.grabbie.offGrabbie();
+				Robot.grabbie.setMotorSpeed(0);
 			}
 		} 
 		
 		//otherwise uses the value given in second constructor
-		else if (select == 0) {
-			Robot.grabbie.pushGrabbie();
-		} else if (select == 1) {
-			Robot.grabbie.reverseGrabbie();
-		} else if (select == 2) {
-			Robot.grabbie.offGrabbie();
+		else {
+			Robot.grabbie.setMotorSpeed(speed);
 		}
 	}
 
@@ -80,11 +72,8 @@ public class LiftPiston extends Command {
 	@Override
 	protected boolean isFinished() {
 		//changes when command finishes depending on constructor used
-		if (select == 3) {
-			return false;
-		} else {
-			return isTimedOut();
-		}
+		if(constructor == 0) return false;
+		else return isTimedOut();
 	}
 
 	

@@ -7,7 +7,7 @@ import org.usfirst.frc.team2929.robot.commands.drivetrain.DriveForward;
 import org.usfirst.frc.team2929.robot.commands.drivetrain.TurnAngle;
 import org.usfirst.frc.team2929.robot.commands.grabber.GrabberEject;
 import org.usfirst.frc.team2929.robot.commands.grabber.MoveGrabbie;
-import org.usfirst.frc.team2929.robot.commands.lift.LiftPiston;
+import org.usfirst.frc.team2929.robot.commands.lift.LiftMotor;
 import org.usfirst.frc.team2929.robot.utility.Direction;
 import org.usfirst.frc.team2929.robot.utility.Maths;
 import org.usfirst.frc.team2929.robot.utility.ObjectSelect;
@@ -65,9 +65,9 @@ public class AutoHatch2 extends CommandGroup{
 			else addSequential(new AimAtTarget(ObjectSelect.CENTER, Direction.RIGHT));
 			
 			addSequential(new DriveToDistance(12));
-			addParallel(new LiftPiston(PistonSelect.FORWARD));
+			addParallel(new LiftMotor(0.5, 0.5));
 			addSequential(new MoveGrabbie(0.5, 0.25));
-			addSequential(new LiftPiston(PistonSelect.REVERSE));
+			addParallel(new LiftMotor(-0.5, 0.5));
 			addParallel(new DriveForward(-12));
 		}
 	}

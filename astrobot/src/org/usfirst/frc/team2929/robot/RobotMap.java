@@ -30,10 +30,6 @@ public class RobotMap {
 	public static final int dR1TalonSRX = 2;
 	public static final int dR2TalonSRX = 3;
 	
-	//Arm
-	public static final int armLS1 = 1;
-	public static final int armMotor = 4;
-	
 	//Ramp
 	public static final int rampMotor = 5;
 	
@@ -50,7 +46,6 @@ public class RobotMap {
 	public static final int gls2 = 1;
 	
 	//Lift
-	public static final int lsolenoidL = 4;
-	public static final int lsolenoidR = 5;
+	public static final int liftMotor = 4;
 	
 }

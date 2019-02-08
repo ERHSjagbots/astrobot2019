@@ -1,7 +1,9 @@
 package org.usfirst.frc.team2929.robot.subsystems;
 
 import org.usfirst.frc.team2929.robot.RobotMap;
-import org.usfirst.frc.team2929.robot.commands.lift.LiftPiston;
+import org.usfirst.frc.team2929.robot.commands.lift.LiftMotor;
+
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
@@ -15,7 +17,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Lift extends Subsystem {
 
 	//creating components
-	DoubleSolenoid liftSolenoid = new DoubleSolenoid(RobotMap.lsolenoidL, RobotMap.lsolenoidR);
+	WPI_TalonSRX liftMotor = new WPI_TalonSRX(RobotMap.liftMotor);
 	
 	/**
 	 * Defines the default command. Called when the subsystem is made.
@@ -23,32 +25,17 @@ public class Lift extends Subsystem {
 	 */
 	public void initDefaultCommand() {
 		
-		//setting default command to lift piston
-		setDefaultCommand(new LiftPiston());
+		//setting default command to lift motor
+		setDefaultCommand(new LiftMotor());
 		
 	}
 	
 	/**
-	 * Pushes forward the lift solenoid.
+	 * Sets value on the motor
 	 * 
+	 * @param speed speed for the motor
 	 */
-	public void pushSolenoid() {
-		liftSolenoid.set(Value.kForward);
-	}
-	
-	/**
-	 * Pulls in the lift solenoid.
-	 * 
-	 */
-	public void reverseSolenoid() {
-		liftSolenoid.set(Value.kReverse);
-	}
-	
-	/**
-	 * Turns off the lift solenoid.
-	 * 
-	 */
-	public void offSolenoid() {
-		liftSolenoid.set(Value.kOff);
+	public void setMotor(double speed) {
+		liftMotor.set(speed);
 	}
 }

@@ -12,9 +12,9 @@ import org.usfirst.frc.team2929.robot.Robot;
 import org.usfirst.frc.team2929.robot.utility.Direction;
 
 /**
- * FRC Generated command template.
+ * Turns the robot to a specific angle
  * 
- * 
+ * @author Matthew Brosnon
  */
 public class TurnAngle extends Command {
 	
@@ -24,6 +24,13 @@ public class TurnAngle extends Command {
 	
 	private boolean finished;
 	
+	
+	/**
+	 * Turns the robot to an angle in a specific direction
+	 * 
+	 * @param angle angle to rotate
+	 * @param right Direction true if turning right
+	 */
 	public TurnAngle(double angle, Direction right) {
 		
 		//requires drivetrain
@@ -32,10 +39,10 @@ public class TurnAngle extends Command {
 		//setup
 		if (right.getValue() == 0) {
 			direction = false;
-			this.angle = angle;
+			this.angle = Math.abs(angle);
 		} else {
 			direction = true;
-			this.angle = -angle;
+			this.angle = Math.abs(angle);
 		}
 		finished = false;
 	}
