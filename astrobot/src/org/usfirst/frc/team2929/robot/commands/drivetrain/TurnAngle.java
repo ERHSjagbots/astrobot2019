@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team2929.robot.commands.auto;
+package org.usfirst.frc.team2929.robot.commands.drivetrain;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team2929.robot.Robot;
