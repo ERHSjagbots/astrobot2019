@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team2929.robot.Robot;
 import org.usfirst.frc.team2929.robot.subsystems.Drivetrain;
+import org.usfirst.frc.team2929.robot.utility.Direction;
 import org.usfirst.frc.team2929.robot.utility.ObjectSelect;
 
 /**
@@ -19,6 +20,7 @@ public class AimAtTarget extends Command {
 	
 	private boolean finished;
 	private double center;
+	private boolean direction;
 	
 	private boolean foundObject;
 	
@@ -36,7 +38,21 @@ public class AimAtTarget extends Command {
 		finished = false;
 		selection = selector.getValue();
 		foundObject = false;
+		direction = true;
 		
+	}
+	
+	public AimAtTarget(ObjectSelect selector, Direction right) {
+		
+		//requires drivetrain system
+		requires(Robot.drivetrain);
+		
+		//variable setup and stuff
+		finished = false;
+		selection = selector.getValue();
+		foundObject = false;
+		if(right.getValue() == 0) direction = false;
+		else direction = true;
 	}
 
 	@Override
@@ -59,7 +75,10 @@ public class AimAtTarget extends Command {
 		
 		//Finds object before running code
 		while (!foundObject) {
-			Robot.drivetrain.getDriveTrain().tankDrive(0.35, -0.35);
+			
+			if (direction) Robot.drivetrain.getDriveTrain().tankDrive(0.4, -0.4);
+			else Robot.drivetrain.getDriveTrain().tankDrive(-0.4, 0.4);
+			
 			if (selection == 0 || selection == 1) {
 				if(!(Robot.centerX == 0)) {
 					foundObject = true;

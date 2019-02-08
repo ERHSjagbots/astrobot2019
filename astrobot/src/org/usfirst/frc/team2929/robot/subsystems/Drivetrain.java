@@ -8,6 +8,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -36,6 +37,7 @@ public class Drivetrain extends Subsystem {
 	public static Encoder lEncoder;
 	public static Encoder rEncoder;
 	
+	public static ADXRS450_Gyro gyro;
 	
 	/**
 	 * Sets values of all the motors, drivetrain, and encoders.
@@ -55,6 +57,8 @@ public class Drivetrain extends Subsystem {
 		
 		lEncoder = new Encoder(0,1);
 		rEncoder = new Encoder(2,3);
+		
+		gyro = new ADXRS450_Gyro();
 		
 		lEncoder.setDistancePerPulse(1/360);
 		rEncoder.setDistancePerPulse(1/360);
@@ -113,6 +117,17 @@ public class Drivetrain extends Subsystem {
 		
 		//returns right encoder
 		return rEncoder;
+	}
+	
+	/**
+	 * Returns the gyro.
+	 * 
+	 * @return ADXRS450_Gyro gyro
+	 */
+	public ADXRS450_Gyro getGyro() {
+		
+		//returns gyro
+		return gyro;
 	}
 	
 	/**

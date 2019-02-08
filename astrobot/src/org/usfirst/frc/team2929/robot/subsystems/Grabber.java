@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  * Grabber subsystem setup and methods.
  * 
- * @author         Matthew Brosnon
+ * @author Matthew Brosnon
  */
 public class Grabber extends Subsystem {
 	
