@@ -97,8 +97,9 @@ public class Robot extends TimedRobot {
 			@Override
 			public void copyPipelineOutputs(GripPipeline pipeline) {
 	            SmartDashboard.putNumber("output size", pipeline.filterContoursOutput().size());
+	            
 				if (pipeline.filterContoursOutput().size() > 0) {
-		            r1 = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
+		            r1 = Imgproc.boundingRect(pipeline.filterContoursOutput().get(Maths.returnXLargest(pipeline, 1)));
 		            synchronized (imgLock) {
 		                centerX = r1.x + (r1.width / 2);
 		                distToObj1 = 0;
@@ -115,7 +116,7 @@ public class Robot extends TimedRobot {
 		            }
 		        }
 				if (pipeline.filterContoursOutput().size() > 1) {
-		            r2 = Imgproc.boundingRect(pipeline.filterContoursOutput().get(1));
+		            r2 = Imgproc.boundingRect(pipeline.filterContoursOutput().get(Maths.returnXLargest(pipeline, 2)));
 		            synchronized (imgLock) {
 		                centerX2 = r2.x + (r2.width / 2);
 		                distToObj2 = 0;
